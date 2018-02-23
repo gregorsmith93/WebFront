@@ -1,0 +1,3 @@
+include 'WebFront.Controller'
+include 'WebFront.Controller.Model'
+include 'WebFront.Service'
