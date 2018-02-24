@@ -28,7 +28,7 @@ war {
     
 cargo {
     containerId = 'tomcat9'
-    port = 80
+    port = 8080
 
     deployable {
         context = 'webfront'

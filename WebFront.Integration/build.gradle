@@ -2,4 +2,8 @@ dependencies {
     compile project(':WebFront.Integration.Model')
     compile project(':WebFront.Domain')
     compile project(':WebFront.Integration.Mapper')
+    
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '2.6'
+    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+    
 }
