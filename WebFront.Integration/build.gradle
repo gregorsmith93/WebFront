@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':WebFront.Integration.Model')
+    compile project(':WebFront.Domain')
+    compile project(':WebFront.Integration.Mapper')
+}

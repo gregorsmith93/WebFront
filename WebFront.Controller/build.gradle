@@ -3,6 +3,7 @@ apply plugin: 'org.akhikhl.gretty'
 dependencies {
     compile project(':WebFront.Service')
     compile project(':WebFront.Controller.Model')	
+    compile project(':WebFront.Controller.Mapper')
     
     compile 'javax.servlet:jstl:1.2'
 }

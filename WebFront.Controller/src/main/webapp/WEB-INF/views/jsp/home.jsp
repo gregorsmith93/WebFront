@@ -28,12 +28,17 @@
 			</c:if>
 
 			<c:if test="${empty msg}">
-				${homeControllerModel.message}
+				<c:forEach items="${homeControllerModelList}" var="item" >
+				${item.message}<br />
+				</c:forEach>
 			</c:if>
 		</p>
+		<form action="" method="post">
+		<input type="text" name="requestCount" />
 		<p>
-			<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+			<input class="btn btn-primary btn-lg" type="submit" value="Learn more" />
 		</p>
+		</form>
 	</div>
 </div>
 

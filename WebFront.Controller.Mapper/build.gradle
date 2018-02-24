@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':WebFront.Controller.Model')
+    compile project(':WebFront.Domain')
+}

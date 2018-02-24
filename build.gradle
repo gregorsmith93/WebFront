@@ -68,10 +68,12 @@ eclipse {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'war'
+    apply plugin: 'groovy'
     
     repositories {
         mavenCentral()
         mavenLocal()
+        jcenter()
     }
 
     dependencies {
@@ -83,6 +85,17 @@ subprojects {
         compile group: 'org.springframework', name: 'spring-web', version: '5.0.4.RELEASE'
         compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.4.RELEASE'
         
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.powermock:powermock-module-junit4:1.7.3'
+        testCompile 'org.powermock:powermock-module-junit4-rule:1.7.3' 
+        testCompile 'org.powermock:powermock-api-mockito2:1.7.3'
+        testCompile 'org.powermock:powermock-classloading-xstream:1.7.3' 
+        testCompile 'org.mockito:mockito-core:2.7.22'              
         
+    }
+    
+    test {
+    
+        testLogging.showStandardStreams = true
     }
 }

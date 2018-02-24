@@ -9,5 +9,8 @@
         http://www.springframework.org/schema/context/spring-context.xsd ">
  
 	<context:component-scan base-package="com.webfront.service" />
+	<context:component-scan base-package="com.webfront.controller.mapper" />
+	<context:component-scan base-package="com.webfront.integration.mapper" />
+	<context:component-scan base-package="com.webfront.integration" />
 
 </beans>

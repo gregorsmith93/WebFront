@@ -2,21 +2,32 @@ package com.webfront.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.webfront.domain.Home;
+import com.webfront.integration.HomeIntegration;
 
 @Service
 public class HomeServiceHandler implements HomeService{
 
 	private static final Logger LOG = LogManager.getLogger(HomeServiceHandler.class);
 	
-	public String getHomeMessage() {
+	private final HomeIntegration homeIntegration;
+	
+	@Autowired
+	public HomeServiceHandler(HomeIntegration homeIntegration) {
+		this.homeIntegration = homeIntegration;
+	}
+	
+	public Home getHome() {
 		
-		LOG.debug("Starting to load home message.");
+		LOG.debug("Starting to load home.");
 		
-		String message = "Fuck the world!";
+		Home home =  homeIntegration.getHome();
 		
-		LOG.debug("Finished loading home message.");
+		LOG.debug("Finished loading home.");
 		
-		return message;
+		return home;
 	}
 }
