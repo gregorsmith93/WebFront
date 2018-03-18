@@ -22,8 +22,12 @@ targetCompatibility = 1.8
 
 war {
     baseName = 'web-front'
-    version = '0.0.1'
     webAppDirName = 'WebFront.Controller/src/main/webapp'
+    
+    manifest {
+        attributes 'Implementation-Title': 'web-front',
+                   'Implementation-Version': '0.0.1'
+    }
 }
     
 cargo {
@@ -80,22 +84,28 @@ subprojects {
         
         compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.10.0'
+      
         compile group: 'org.springframework', name: 'spring-core', version: '5.0.4.RELEASE'
         compile group: 'org.springframework', name: 'spring-beans', version: '5.0.4.RELEASE'
         compile group: 'org.springframework', name: 'spring-web', version: '5.0.4.RELEASE'
         compile group: 'org.springframework', name: 'spring-webmvc', version: '5.0.4.RELEASE'
+        
+        compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+        compile group: 'commons-io', name: 'commons-io', version: '2.6'
         
         testCompile 'junit:junit:4.12'
         testCompile 'org.powermock:powermock-module-junit4:1.7.3'
         testCompile 'org.powermock:powermock-module-junit4-rule:1.7.3' 
         testCompile 'org.powermock:powermock-api-mockito2:1.7.3'
         testCompile 'org.powermock:powermock-classloading-xstream:1.7.3' 
-        testCompile 'org.mockito:mockito-core:2.7.22'              
+        testCompile 'org.mockito:mockito-core:2.7.22'
         
+        compile group: 'commons-codec', name: 'commons-codec', version: '1.11'        
     }
     
     test {
     
-        testLogging.showStandardStreams = true
+        testLogging.showStandardStreams = false
     }
 }

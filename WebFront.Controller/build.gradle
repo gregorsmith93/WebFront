@@ -1,9 +1,18 @@
 apply plugin: 'org.akhikhl.gretty'
 
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'web-front',
+                   'Implementation-Version': '0.0.1'
+    }
+}
+
 dependencies {
     compile project(':WebFront.Service')
     compile project(':WebFront.Controller.Model')	
     compile project(':WebFront.Controller.Mapper')
     
     compile 'javax.servlet:jstl:1.2'
+    compile 'javax.servlet.jsp:jsp-api:2.2'
+    
 }

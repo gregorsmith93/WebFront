@@ -1,3 +1,6 @@
+/**
+ * @author Gregor Smith - 2018
+ */
 package com.webfront.integration.mapper;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,34 +10,47 @@ import org.springframework.stereotype.Component;
 import com.webfront.domain.Home;
 import com.webfront.integration.model.HomeIntegrationModel;
 
+/**
+ * Implementation of {@link HomeIntegrationMapper}
+ */
 @Component
-public class HomeIntegrationMapperHandler implements HomeIntegrationMapper{
+public class HomeIntegrationMapperHandler implements HomeIntegrationMapper {
 
-	private static final Logger LOG = LogManager.getLogger(HomeIntegrationMapperHandler.class);
-	
-	public Home map(HomeIntegrationModel homeIntegrationModel) {
-		
-		LOG.debug("Starting to map Home Integration model to domain.");
-		
-		Home home = new Home();
-		
+	/** Logger instance. */
+	private static final Logger LOG = LogManager
+			.getLogger(HomeIntegrationMapperHandler.class);
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Home map(final HomeIntegrationModel homeIntegrationModel) {
+
+		LOG.debug("Mapping HomeIntegrationModel: {}", homeIntegrationModel);
+
+		final Home home = new Home();
+
 		home.setMessage(homeIntegrationModel.getMessage());
-		
-		LOG.debug("Finished mapping Home Integration model to domain.");
-		
+
+		LOG.debug("Mapped to Home: {}", home);
+
 		return home;
 	}
-	
-	public HomeIntegrationModel map(Home home) {
-		
-		LOG.debug("Starting to map Home domain to integration model.");
-		
-		HomeIntegrationModel homeIntegrationModel = new HomeIntegrationModel();
-		
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HomeIntegrationModel map(final Home home) {
+
+		LOG.debug("Mapping Home: {}", home);
+
+		final HomeIntegrationModel homeIntegrationModel = new HomeIntegrationModel();
+
 		homeIntegrationModel.setMessage(home.getMessage());
-		
-		LOG.debug("Finished mapping home domain to integration model.");
-		
+
+		LOG.debug("Mapped to HomeIntegrationModel: {}", homeIntegrationModel);
+
 		return homeIntegrationModel;
 	}
 }

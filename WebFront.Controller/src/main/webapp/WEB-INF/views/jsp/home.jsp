@@ -15,6 +15,8 @@
 	<div class="container">
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">Project Name</a>
+			<a class="navbar-brand" href="user">User</a>
+			<a class="navbar-brand" href="user/login">Login</a>
 		</div>
 	</div>
 </nav>

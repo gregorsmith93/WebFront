@@ -1,69 +1,93 @@
+/**
+ * @author Gregor Smith - 2018
+ */
 package com.webfront.integration;
 
 import java.io.IOException;
 
 import javax.ws.rs.InternalServerErrorException;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.webfront.domain.Home;
 import com.webfront.integration.mapper.HomeIntegrationMapper;
 import com.webfront.integration.model.HomeIntegrationModel;
 
+/**
+ * Implementation of {@link HomeIntegration}
+ */
 @Component
-public class HomeIntegrationHandler implements HomeIntegration{
+public class HomeIntegrationHandler implements HomeIntegration {
 
-	private static final Logger LOG = LogManager.getLogger(HomeIntegrationHandler.class);
-	
+	/** Logger instance. */
+	private static final Logger LOG = LogManager
+			.getLogger(HomeIntegrationHandler.class);
+
+	/** Home integration mapper. */
 	private final HomeIntegrationMapper homeIntegrationMapper;
-	
+
+	/** Client request. */
+	private final ClientRequest clientRequest;
+
+	/** Json integration. */
+	private final JsonIntegration jsonIntegration;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param homeIntegrationMapper
+	 *            Home integration mapper.
+	 * @param clientRequest
+	 *            Client request.
+	 * @param jsonIntegration
+	 *            Json integration.
+	 */
 	@Autowired
-	public HomeIntegrationHandler(HomeIntegrationMapper homeIntegrationMapper) {
+	public HomeIntegrationHandler(
+			final HomeIntegrationMapper homeIntegrationMapper,
+			final ClientRequest clientRequest,
+			final JsonIntegration jsonIntegration) {
 		this.homeIntegrationMapper = homeIntegrationMapper;
+		this.clientRequest = clientRequest;
+		this.jsonIntegration = jsonIntegration;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Home getHome() {
-		
+
 		LOG.debug("Starting to get home.");
-		
-		Client client = ClientBuilder.newClient();
-		
-		String path = new StringBuilder(IntegrationConstants.HOME_API_PATH).toString();
-		
-		WebTarget webTarget = client.target(path);
-		
-		Response response = webTarget.request().accept(MediaType.APPLICATION_JSON_VALUE).get(Response.class);
+
+		final Response response = clientRequest.performClientRequest(
+				IntegrationConstants.HOME_API_PATH, RequestMethod.GET, null,
+				null);
 
 		HomeIntegrationModel homeIntegrationModel = new HomeIntegrationModel();
-		
+
 		if (response.getStatus() == 200) {
-			
+
 			response.bufferEntity();
-			String jsonString = response.readEntity(String.class);
-			
-			ObjectMapper mapper = new ObjectMapper();
-			
+			final String jsonString = response.readEntity(String.class);
+
 			try {
-			    homeIntegrationModel = mapper.readValue(jsonString, HomeIntegrationModel.class);
-			} catch(IOException e) {
+				homeIntegrationModel = jsonIntegration.getObjectFromJsonString(
+						jsonString, HomeIntegrationModel.class);
+			} catch (final IOException e) {
 				throw new InternalServerErrorException(e);
 			}
-		}
-		else {
+		} else {
 			throw new InternalServerErrorException("Response was not 200-OK.");
 		}
-		
+
 		LOG.debug("Finished getting home.");
-		
+
 		return homeIntegrationMapper.map(homeIntegrationModel);
 	}
 }

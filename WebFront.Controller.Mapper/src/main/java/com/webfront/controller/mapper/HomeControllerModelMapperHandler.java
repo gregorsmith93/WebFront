@@ -1,3 +1,6 @@
+/**
+ * @author Gregor Smith - 2018
+ */
 package com.webfront.controller.mapper;
 
 import org.apache.logging.log4j.LogManager;
@@ -7,34 +10,48 @@ import org.springframework.stereotype.Component;
 import com.webfront.controller.model.HomeControllerModel;
 import com.webfront.domain.Home;
 
+/**
+ * Implementation of {@link HomeControllerModelMapper}
+ */
 @Component
-public class HomeControllerModelMapperHandler implements HomeControllerModelMapper {
+public class HomeControllerModelMapperHandler
+		implements HomeControllerModelMapper {
 
-	private static final Logger LOG = LogManager.getLogger(HomeControllerModelMapperHandler.class);
-	
-	public HomeControllerModel map(Home home) {
-		
-		LOG.debug("Mapping Home domain model to Home Controller Model.");
-		
-		HomeControllerModel homeControllerModel = new HomeControllerModel();
-		
+	/** Logger instance. */
+	private static final Logger LOG = LogManager
+			.getLogger(HomeControllerModelMapperHandler.class);
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public HomeControllerModel map(final Home home) {
+
+		LOG.debug("Mapping Home: {}", home);
+
+		final HomeControllerModel homeControllerModel = new HomeControllerModel();
+
 		homeControllerModel.setMessage(home.getMessage());
-		
-		LOG.debug("Finished mapping Home domain to Home controller.");
-		
+
+		LOG.debug("Mapped into HomeControllerModel {}", homeControllerModel);
+
 		return homeControllerModel;
 	}
-	
-	public Home map(HomeControllerModel homeControllerModel) {
-		
-		LOG.debug("Mapping Home Controller model to Home domain.");
-		
-		Home home = new Home();
-		
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Home map(final HomeControllerModel homeControllerModel) {
+
+		LOG.debug("Mapping HomeControllerModel: {}", homeControllerModel);
+
+		final Home home = new Home();
+
 		home.setMessage(homeControllerModel.getMessage());
-		
-		LOG.debug("Finished mapping Home Controller model to Home domain.");
-		
+
+		LOG.debug("Mapped into Home: {}", home);
+
 		return home;
 	}
 }
