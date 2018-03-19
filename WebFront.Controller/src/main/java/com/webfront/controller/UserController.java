@@ -31,6 +31,9 @@ public class UserController {
 	/** User service. */
 	private final UserService userService;
 
+	/** View loader. */
+	private final ViewLoader viewLoader;
+
 	/** User controller mapper. */
 	private final UserControllerMapper userControllerMapper;
 
@@ -41,12 +44,15 @@ public class UserController {
 	 *            User service.
 	 * @param userControllerMapper
 	 *            User controller mapper.
+	 * @param viewLoader
+	 *            View loader.
 	 */
 	@Autowired
 	public UserController(final UserService userService,
-			final UserControllerMapper userControllerMapper) {
+			final UserControllerMapper userControllerMapper, final ViewLoader viewLoader) {
 		this.userControllerMapper = userControllerMapper;
 		this.userService = userService;
+		this.viewLoader = viewLoader;
 	}
 
 	/**
@@ -59,7 +65,7 @@ public class UserController {
 
 		LOG.debug("Loading create user page.");
 
-		final ModelAndView modelAndView = new ModelAndView("createUser");
+		final ModelAndView modelAndView = viewLoader.loadView("createUser");
 
 		final UserControllerModel userControllerModel = new UserControllerModel();
 
@@ -84,8 +90,7 @@ public class UserController {
 
 		LOG.debug("Received request to create user {}", userControllerModel);
 
-		final ModelAndView modelAndView = new ModelAndView(
-				"userCreationSuccess");
+		final ModelAndView modelAndView = viewLoader.loadView("userCreationSuccess");
 
 		final User userToCreate = userControllerMapper.map(userControllerModel);
 
@@ -111,7 +116,7 @@ public class UserController {
 
 		LOG.debug("Loading login page.");
 
-		final ModelAndView modelAndView = new ModelAndView("login");
+		final ModelAndView modelAndView = viewLoader.loadView("login");
 
 		final UserControllerModel userControllerModel = new UserControllerModel();
 
@@ -140,8 +145,7 @@ public class UserController {
 
 		LOG.debug("Received login request for username: {}.", userControllerModel.getUsername());
 
-		final ModelAndView modelAndView = new ModelAndView(
-				"login");
+		final ModelAndView modelAndView = viewLoader.loadView("login");
 
 		final User userToLogin = userControllerMapper.map(userControllerModel);
 
