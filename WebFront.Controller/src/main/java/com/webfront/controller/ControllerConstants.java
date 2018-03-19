@@ -10,9 +10,6 @@ package com.webfront.controller;
  */
 public final class ControllerConstants {
 
-	/** webapps root folder name. */
-	public static final String WEBAPPS = "webapps/";
-
 	/** Directory to scan for views. */
 	public static final String VIEW_DIRECTORY = "/WEB-INF/views";
 

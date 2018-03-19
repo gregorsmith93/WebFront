@@ -11,11 +11,13 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +36,13 @@ public class ViewLoaderHandler implements ViewLoader {
 	/** List of valid views. */
 	private final List<String> viewList = new ArrayList<String>();
 
+	private final ServletContext servletContext;
+
+	@Autowired
+	public ViewLoaderHandler(final ServletContext servletContext) {
+		this.servletContext = servletContext;
+	}
+
 	/**
 	 * Initialisation.
 	 */
@@ -42,14 +51,7 @@ public class ViewLoaderHandler implements ViewLoader {
 
 		LOG.debug("Initialising view loader.");
 
-		final Package classPackage = ViewLoaderHandler.class.getPackage();
-
-		final StringBuilder viewRootDirectoryPath = new StringBuilder();
-		viewRootDirectoryPath.append(ControllerConstants.WEBAPPS)
-				.append(classPackage.getImplementationTitle())
-				.append(ControllerConstants.VIEW_DIRECTORY);
-
-		final File viewRootDirectory = new File(viewRootDirectoryPath.toString());
+		final File viewRootDirectory = new File(servletContext.getRealPath(ControllerConstants.VIEW_DIRECTORY));
 
 		LOG.debug("Looking for views in directory: {}", viewRootDirectory.getAbsolutePath());
 
